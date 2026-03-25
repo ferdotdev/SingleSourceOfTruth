@@ -1,5 +1,3 @@
-# DOCS CONVENTIONS.md
-
 ---
 name: docs-conventions
 description: "Conventions, structure and formatting rules for project documentation. Use this skill whenever creating or editing any .md documentation file, context files (AGENTS.md, CLAUDE.md, GEMINI.md, COPILOT.md, etc.), or any file inside /docs."
