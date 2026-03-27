@@ -1,6 +1,6 @@
 # Source Policy
 
-Use this file when deciding what counts as evidence and how to answer if the docs are incomplete, stale, or split across multiple pages.
+Use this file when deciding what counts as evidence and how to answer if the docs are incomplete, ambiguous, or split across multiple pages.
 
 ## Source Priority
 
@@ -18,6 +18,14 @@ Do not treat community guides, forum posts, or general memory as equal to offici
 - Do not stop at `llms.txt` when a specific page can be fetched or queried.
 - Normalize malformed or duplicated URLs before using them.
 - If `llms.txt` and a live page disagree, trust the live page.
+
+## Coverage Gap Updater
+
+- Use the live updater only when the curated local index cannot route the question well enough.
+- Read `references/index-updater.md` before running the updater.
+- Run `python scripts/index-updater.py "<user question>"` and treat the output as a temporary routing overlay.
+- Do not rewrite `references/llms-index.md` automatically from updater output.
+- If the updater fails, fall back to the curated local index and say that live refresh verification failed.
 
 ## When Multiple Official Pages Cover the Topic
 
@@ -56,5 +64,5 @@ Recommended phrasing:
 ## Offline or Limited-Tool Fallback
 
 - If live fetch or docs-query tools are unavailable, use the local references in this skill.
-- Explicitly say that you answered from the curated local index and could not verify against the latest live pages.
+- Explicitly say that you answered from the curated local index and could not verify against a live refreshed index.
 - Stay conservative and avoid high-confidence claims about recent product changes.

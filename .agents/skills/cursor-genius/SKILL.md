@@ -43,12 +43,15 @@ If the request is ambiguous, ask whether they mean the Cursor product before pro
 2. Classify the topic with `references/llms-index.md`.
 3. Read `references/topic-routing.md` to find the most likely canonical pages.
 4. Fetch or query the current official Cursor pages referenced there.
-5. If the local map seems incomplete or stale, refresh from `https://cursor.com/llms.txt` before answering.
-6. Read `references/source-policy.md` when claims are ambiguous, spread across multiple pages, or not directly confirmed.
-7. Ask one clarifying question if the request spans multiple unrelated Cursor topics.
-8. Respond with the answer format below.
+5. If there is a `coverage gap`, read `references/index-updater.md` and run `python scripts/index-updater.py "<user question>"`.
+6. Use the emitted overlay only for the current answer or current session. Never rewrite `references/llms-index.md` automatically.
+7. Read `references/source-policy.md` when claims are ambiguous, spread across multiple pages, or not directly confirmed.
+8. Ask one clarifying question if the request spans multiple unrelated Cursor topics.
+9. Respond with the answer format below.
 
-If no live web or docs tool is available, answer conservatively from the local references and say that you could not verify against the latest live docs.
+A `coverage gap` exists when the curated local index cannot classify the topic cleanly, cannot point to a sufficiently specific official page, or appears to contain a missing, malformed, or suspicious route for the question.
+
+If no live web or docs tool is available, or if the updater fails, answer conservatively from the local references and say that you could not verify against a live refreshed index.
 
 ## Answer Format
 
@@ -67,6 +70,7 @@ Keep answers concise unless the user asks for depth.
 - When multiple official pages cover the same topic, prefer the more specific page and mention the secondary page only if it adds context.
 - Distinguish official Cursor docs from community content or general knowledge.
 - Summarize in your own words unless exact wording is important.
+- Only invoke the updater on real coverage gaps; do not pay the latency cost for topics that are already well covered by the curated local index.
 - Do not over-trigger on code snippets or repo symbols named `cursor`.
 
 ## Examples
@@ -99,4 +103,5 @@ Agent behavior:
 
 - Read `references/llms-index.md` first for the documentation map.
 - Read `references/topic-routing.md` for canonical page selection.
-- Read `references/source-policy.md` for ambiguity, stale-index, and evidence rules.
+- Read `references/index-updater.md` only when there is a real coverage gap.
+- Read `references/source-policy.md` for coverage-gap, ambiguity, and evidence rules.
